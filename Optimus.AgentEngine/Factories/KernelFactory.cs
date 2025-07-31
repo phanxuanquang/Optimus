@@ -15,15 +15,17 @@ namespace Optimus.AgentEngine.Factories
             _kernelBuilder = Kernel.CreateBuilder();
         }
 
-        public KernelFactory WithPlugin(object plugin)
+        public KernelFactory WithPlugins(IEnumerable<object> plugins)
         {
-            var isPluginAdded = _kernelBuilder.Plugins.Services.Any(s => s.ImplementationType == plugin.GetType());
-            if (isPluginAdded)
+            foreach (var plugin in plugins)
             {
-                return this;
+                var isPluginAdded = _kernelBuilder.Plugins.Services.Any(s => s.ImplementationType == plugin.GetType());
+                if (isPluginAdded)
+                {
+                    continue;
+                }
+                _kernelBuilder.Plugins.AddFromObject(plugin);
             }
-
-            _kernelBuilder.Plugins.AddFromObject(plugin);
             return this;
         }
 

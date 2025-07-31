@@ -1,10 +1,13 @@
 ﻿using Microsoft.UI.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using Optimus.AgentEngine;
 using Optimus.AgentEngine.Factories;
 using Optimus.Commons.Enums;
 using Optimus.Helpers;
+using Optimus.SemanticKernelPlugins;
 using Optimus.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -44,7 +47,6 @@ namespace Optimus.Pages
                 OnPropertyChanged();
             }
         }
-
 
         public Conversation()
         {
@@ -105,10 +107,21 @@ namespace Optimus.Pages
             Messages.Clear();
             AgentSuggestions.Clear();
 
-            var response = await _chatCompletionService.SendMessageAsync(@"To start the conversation, please introduce to me about yourself very *briefly* and *concisely*, such as who you are, what you can do, what you can help me, or anything else that you think it may be relevant to my database and be useful to me; and some good practices for me to help you to do the task effectively. 
-Treat me as your teammate, avoid using a formal-like tone while talking to me; just use a natural, friendly tone with daily-life words when talking to me, like you are talking with your friends in real life.");
+            var sampleAiServiceProvider = AiServiceProvider.Gemini;
+            var modelId = "gemini-2.5-flash";
+            var kernelFactory = sampleAiServiceProvider switch
+            {
+                AiServiceProvider.Gemini => new KernelFactory().UseGoogleGeminiProvider(Cache.ApiKey, modelId),
+                _ => throw new NotSupportedException("The specified AI service provider is not supported.")
+            };
 
-            SetAgentMessage(response.ToString());
+            _chatCompletionService = new AgentChatCompletionService(kernelFactory.WithPlugins(Cache.SemanticKernelPlugins))
+                .WithSystemInstruction(_globalInstruction);
+
+            var welcomeMessage = await _chatCompletionService.SendMessageAsync(@"To start the conversation, please introduce to me about yourself very *briefly* and *concisely*, such as who you are, what you can do, how you can help me, and some good practices for me to help you to do the task effectively. 
+Treat me as your best friend, avoid using a formal-like tone while talking to me; just use a natural, friendly tone with daily-life words when talking to me, like you are talking with your friends in real life.");
+
+            SetAgentMessage(welcomeMessage.ToString());
         }
 
         private async Task HandleUserInputAsync(string userInput)
@@ -140,20 +153,10 @@ Treat me as your teammate, avoid using a formal-like tone while talking to me; j
         {
             base.OnNavigatedTo(e);
 
-            var sampleAiServiceProvider = AiServiceProvider.Gemini;
-            var modelId = "gemini-2.5-flash";
-            var kernelFactory = sampleAiServiceProvider switch
-            {
-                AiServiceProvider.Gemini => new KernelFactory().UseGoogleGeminiProvider(Cache.ApiKey, modelId),
-                _ => throw new NotSupportedException("The specified AI service provider is not supported.")
-            };
-
-            _chatCompletionService = new AgentChatCompletionService(kernelFactory).WithSystemInstruction(_globalInstruction);
-
             await ResetConversationAsync();
         }
 
-        private void QueryBox_KeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void QueryBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             var textbox = sender as TextBox;
 
@@ -189,12 +192,12 @@ Treat me as your teammate, avoid using a formal-like tone while talking to me; j
             }
         }
 
-        private void QueryBox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void QueryBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
             _isImeActive = false;
         }
 
-        private async void SendButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
             var userInput = QueryBox.Text.Trim();
             QueryBox.Text = string.Empty;
@@ -207,7 +210,7 @@ Treat me as your teammate, avoid using a formal-like tone while talking to me; j
             await HandleUserInputAsync(userInput);
         }
 
-        private async void ResetConversationButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void ResetConversationButton_Click(object sender, RoutedEventArgs e)
         {
             //if (Messages.Count == 0)
             //{
