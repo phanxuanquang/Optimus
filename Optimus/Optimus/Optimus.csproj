@@ -24,6 +24,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controls\AgentChatMessage.xaml" />
+    <None Remove="Controls\UserChatMessage.xaml" />
     <None Remove="Images\LockScreenLogo.scale-200.png" />
     <None Remove="Images\SplashScreen.scale-200.png" />
     <None Remove="Images\Square150x150Logo.scale-200.png" />
@@ -31,6 +33,7 @@
     <None Remove="Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <None Remove="Images\StoreLogo.png" />
     <None Remove="Images\Wide310x150Logo.scale-200.png" />
+    <None Remove="Pages\Conversation.xaml" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -69,10 +72,36 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Markdown" Version="7.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Optimus.AgentEngine\Optimus.AgentEngine.csproj" />
     <ProjectReference Include="..\..\Optimus.LocalDatabase\Optimus.LocalDatabase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Pages\Conversation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\AgentChatMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\UserChatMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
     <!-- Publish Properties -->

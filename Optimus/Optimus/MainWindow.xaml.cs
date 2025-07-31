@@ -1,5 +1,7 @@
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Animation;
+using Optimus.Pages;
 using System.Threading.Tasks;
 
 namespace Optimus
@@ -21,6 +23,8 @@ namespace Optimus
         {
             // Simulate some startup work, like loading resources or initializing services
             await Task.Delay(2000);
+            MainFrame.Navigate(typeof(Conversation), null, new DrillInNavigationTransitionInfo());
+
         }
     }
 }

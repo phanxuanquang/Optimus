@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Optimus.Pages.Conversation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Optimus.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:templateselectors="using:Optimus.TemplateSelectors" xmlns:controls="using:Optimus.Controls" xmlns:viewmodels="using:Optimus.ViewModels"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <templateselectors:ChatMessageTemplateSelector 
+            x:Key="ChatMessageTemplateSelector" 
+            AgentTemplate="{StaticResource AgentDataTemplate}" 
+            UserTemplate="{StaticResource UserDataTemplate}" />
+
+        <DataTemplate x:Key="UserDataTemplate" x:DataType="viewmodels:ChatMessageViewModel">
+            <controls:UserChatMessage ViewModel="{x:Bind Mode=OneWay}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AgentDataTemplate" x:DataType="viewmodels:ChatMessageViewModel">
+            <controls:AgentChatMessage ViewModel="{x:Bind Mode=OneWay}"/>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView 
+            Grid.Row="0" 
+            MaxWidth="1200"
+            IsItemClickEnabled="False"
+            CanDragItems="False" 
+            CanReorderItems="False" 
+            SelectionMode="None" 
+            Padding="8"
+            ItemTemplateSelector="{StaticResource ChatMessageTemplateSelector}"
+            ItemsSource="{x:Bind ChatMessages}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel VerticalAlignment="Bottom" ItemsUpdatingScrollMode="KeepLastItemInView" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <Grid Grid.Row="1" Background="Transparent" ColumnSpacing="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox 
+                Grid.Column="0" 
+                MinWidth="200"
+                MaxHeight="200" 
+                VerticalAlignment="Stretch" 
+                TextWrapping="Wrap" 
+                PlaceholderText="Enter your message (press Shift + Enter to insert a new line)" 
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                AcceptsReturn="True" 
+                x:Name="QueryBox" />
+            <ProgressBar 
+                Grid.Column="0"
+                IsIndeterminate="True" 
+                ShowPaused="False" 
+                ShowError="False"
+                VerticalAlignment="Bottom"/>
+            <Button 
+                Grid.Column="1" 
+                ToolTipService.ToolTip="Send your message" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Stretch" 
+                Style="{ThemeResource AccentButtonStyle}">
+                <FontIcon Glyph="&#xE724;" FontSize="17"/>
+            </Button>
+            <Button 
+                Grid.Column="2" 
+                ToolTipService.ToolTip="Reset the conversation" 
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Stretch">
+                <FontIcon Glyph="&#xE777;" FontSize="17"/>
+            </Button>
+        </Grid>
+        <TextBlock 
+            Grid.Row="2" 
+            Text="Optimus can make mistakes sometimes. Double-checking is highly reccommended." 
+            Opacity="0.5" 
+            TextAlignment="Center" 
+            Style="{StaticResource CaptionTextBlockStyle}"/>
+    </Grid>
+</Page>

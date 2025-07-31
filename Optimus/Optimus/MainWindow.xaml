@@ -14,6 +14,6 @@
     </Window.SystemBackdrop>
 
     <Grid>
-
+        <Frame x:Name="MainFrame" Padding="16,8" />
     </Grid>
 </Window>

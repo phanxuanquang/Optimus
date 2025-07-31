@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Optimus.Controls.UserChatMessage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Optimus.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:extensions="using:Optimus.Extensions" 
+    d:DataContext="{d:DesignInstance Type=local:UserChatMessage}"
+    mc:Ignorable="d">
+
+    <StackPanel
+        HorizontalAlignment="Right" 
+        Padding="16,12"
+        CornerRadius="{StaticResource OverlayCornerRadius}"
+        Background="{ThemeResource AccentFillColorDefaultBrush}">
+        <extensions:CustomMarkdownTextBlock 
+            QuoteBackground="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+            InlineCodeBackground="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+            Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" 
+            Text="{x:Bind ViewModel.Message, Mode=OneWay}" />
+    </StackPanel>
+</UserControl>
