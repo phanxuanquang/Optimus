@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.57.0-alpha" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Onnx" Version="1.57.0-alpha" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Google" Version="1.57.0-alpha" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Factories\" />
     <Folder Include="Services\" />
     <Folder Include="Plugins\" />
   </ItemGroup>

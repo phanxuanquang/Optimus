@@ -40,7 +40,7 @@
             SelectionMode="None" 
             Padding="8"
             ItemTemplateSelector="{StaticResource ChatMessageTemplateSelector}"
-            ItemsSource="{x:Bind ChatMessages}">
+            ItemsSource="{x:Bind Messages}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsStackPanel VerticalAlignment="Bottom" ItemsUpdatingScrollMode="KeepLastItemInView" />
@@ -68,7 +68,9 @@
                 PlaceholderText="Enter your message (press Shift + Enter to insert a new line)" 
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 AcceptsReturn="True" 
-                x:Name="QueryBox" />
+                x:Name="QueryBox"
+                KeyUp="QueryBox_KeyUp"
+                PreviewKeyDown="QueryBox_PreviewKeyDown"/>
             <ProgressBar 
                 Grid.Column="0"
                 IsIndeterminate="True" 
@@ -80,14 +82,16 @@
                 ToolTipService.ToolTip="Send your message" 
                 VerticalAlignment="Bottom" 
                 HorizontalAlignment="Stretch" 
-                Style="{ThemeResource AccentButtonStyle}">
+                Style="{ThemeResource AccentButtonStyle}"
+                Click="SendButton_Click">
                 <FontIcon Glyph="&#xE724;" FontSize="17"/>
             </Button>
             <Button 
                 Grid.Column="2" 
                 ToolTipService.ToolTip="Reset the conversation" 
                 VerticalAlignment="Bottom"
-                HorizontalAlignment="Stretch">
+                HorizontalAlignment="Stretch"
+                Click="ResetConversationButton_Click">
                 <FontIcon Glyph="&#xE777;" FontSize="17"/>
             </Button>
         </Grid>

@@ -26,7 +26,7 @@ namespace Optimus.ViewModels
             };
         }
 
-        public static ChatMessageViewModel CreateAssistantMessage(string? message, DataTable? data = null)
+        public static ChatMessageViewModel CreateAgentMessage(string? message, DataTable? data = null)
         {
             return new ChatMessageViewModel
             {

@@ -21,10 +21,7 @@ namespace Optimus
 
         private async Task FinishStartupAsync()
         {
-            // Simulate some startup work, like loading resources or initializing services
-            await Task.Delay(2000);
             MainFrame.Navigate(typeof(Conversation), null, new DrillInNavigationTransitionInfo());
-
         }
     }
 }
