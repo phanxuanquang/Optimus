@@ -53,48 +53,59 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <Grid Grid.Row="1" Background="Transparent" ColumnSpacing="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox 
-                Grid.Column="0" 
-                MinWidth="200"
-                MaxHeight="200" 
-                VerticalAlignment="Stretch" 
-                TextWrapping="Wrap" 
-                PlaceholderText="Enter your message (press Shift + Enter to insert a new line)" 
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                AcceptsReturn="True" 
-                x:Name="QueryBox"
-                KeyUp="QueryBox_KeyUp"
-                PreviewKeyDown="QueryBox_PreviewKeyDown"/>
-            <ProgressBar 
-                Grid.Column="0"
-                IsIndeterminate="True" 
-                ShowPaused="False" 
-                ShowError="False"
-                VerticalAlignment="Bottom"/>
-            <Button 
-                Grid.Column="1" 
-                ToolTipService.ToolTip="Send your message" 
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Stretch" 
-                Style="{ThemeResource AccentButtonStyle}"
-                Click="SendButton_Click">
-                <FontIcon Glyph="&#xE724;" FontSize="17"/>
-            </Button>
-            <Button 
-                Grid.Column="2" 
-                ToolTipService.ToolTip="Reset the conversation" 
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Stretch"
-                Click="ResetConversationButton_Click">
-                <FontIcon Glyph="&#xE777;" FontSize="17"/>
-            </Button>
-        </Grid>
+
+        <StackPanel Grid.Row="1" Spacing="8" CornerRadius="{StaticResource OverlayCornerRadius}" Padding="20" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+            <Grid Background="Transparent" ColumnSpacing="6">
+                <TextBox 
+                    MinWidth="200"
+                    MaxHeight="200" 
+                    VerticalAlignment="Stretch" 
+                    TextWrapping="Wrap" 
+                    PlaceholderText="Enter your message (press Shift + Enter to insert a new line)" 
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    AcceptsReturn="True" 
+                    x:Name="QueryBox"
+                    KeyUp="QueryBox_KeyUp"
+                    PreviewKeyDown="QueryBox_PreviewKeyDown"/>
+                <ProgressBar 
+                    IsIndeterminate="True" 
+                    ShowPaused="False" 
+                    ShowError="False"
+                    VerticalAlignment="Bottom"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ToggleButton>
+                    <ToggleButton.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xF4A5;" FontSize="{StaticResource BodyTextBlockFontSize}"/>
+                            <TextBlock Text="Deep Reasoning" Style="{StaticResource CaptionTextBlockStyle}"/>
+                        </StackPanel>
+                    </ToggleButton.Content>
+                </ToggleButton>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
+                    <Button 
+                        Padding="6"
+                        ToolTipService.ToolTip="Attach files" 
+                        VerticalAlignment="Bottom" 
+                        HorizontalAlignment="Stretch">
+                        <FontIcon Glyph="&#xE723;" FontSize="{StaticResource BodyTextBlockFontSize}"/>
+                    </Button>
+                    <Button 
+                         Padding="6"
+                         ToolTipService.ToolTip="Attach files" 
+                         VerticalAlignment="Bottom" 
+                         HorizontalAlignment="Stretch"
+                        Style="{StaticResource AccentButtonStyle}">
+                        <FontIcon Glyph="&#xE978;" FontSize="{StaticResource BodyTextBlockFontSize}"/>
+                    </Button>
+                </StackPanel>
+                
+            </Grid>
+        </StackPanel>
         <TextBlock 
             Grid.Row="2" 
             Text="Optimus can make mistakes sometimes. Double-checking is highly reccommended." 

@@ -13,7 +13,77 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
-        <Frame x:Name="MainFrame" Padding="16,8" />
+    <Grid RowSpacing="8">
+        <NavigationView 
+            IsBackButtonVisible="Visible"
+            PaneDisplayMode="Left"
+            SelectionChanged="NavView_SelectionChanged"
+            BackRequested="NavView_BackRequested">
+            <NavigationView.MenuItems>
+                <NavigationViewItem>
+                    <NavigationViewItem.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="12" Padding="4">
+                            <FontIcon Glyph="&#xE8F2;" />
+                            <TextBlock Text="Conversations" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </NavigationViewItem.Content>
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem>
+                            <NavigationViewItem.Content>
+                                <Grid ToolTipService.ToolTip="Something">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Spacing="3" Padding="0,8" Grid.Column="0">
+                                        <TextBlock Text="Something"/>
+                                        <TextBlock Text="Sometime" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                                    </StackPanel>
+                                    <Button Grid.Column="1" Background="Transparent" BorderThickness="0">
+                                        <FontIcon Glyph="&#xE712;" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                        <Button.Flyout>
+                                            <MenuFlyout Placement="RightEdgeAlignedTop">
+                                                <MenuFlyoutItem Text="Rename">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8AC;" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem Text="Summarize">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xF4A5;" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutSeparator/>
+                                                <MenuFlyoutItem Text="Delete">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE74D;" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Grid>
+                            </NavigationViewItem.Content>
+                        </NavigationViewItem>
+
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox QueryIcon="Find" AutomationProperties.Name="Search" PlaceholderText="Search for your conversations"/>
+            </NavigationView.AutoSuggestBox>
+            <NavigationView.PaneCustomContent>
+                <Button Background="Transparent" BorderThickness="0" Margin="14,0,14,6" Visibility="Visible" HorizontalAlignment="Stretch" ToolTipService.Placement="Right" ToolTipService.ToolTip="Start a new conversation with Optimus">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE8BD;" FontSize="16" VerticalAlignment="Center" />
+                        <TextBlock Text="New conversation" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </NavigationView.PaneCustomContent>
+
+            <Grid CornerRadius="{StaticResource OverlayCornerRadius}">
+                <Frame x:Name="MainFrame" Padding="12,0" />
+            </Grid>
+        </NavigationView>
     </Grid>
 </Window>
