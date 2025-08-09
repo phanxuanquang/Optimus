@@ -7,12 +7,12 @@ using Optimus.AgentEngine;
 using Optimus.AgentEngine.Factories;
 using Optimus.Commons.Enums;
 using Optimus.Helpers;
-using Optimus.SemanticKernelPlugins;
 using Optimus.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.System;
@@ -36,7 +36,7 @@ namespace Optimus.Pages
 
         private bool _isLoading = false;
         private bool _isImeActive = true;
-        private string _globalInstruction = "You are a helpful assistant. Please answer the user's questions concisely and accurately.";
+        private string _globalInstruction;
 
         public bool IsLoading
         {
@@ -114,6 +114,8 @@ namespace Optimus.Pages
                 AiServiceProvider.Gemini => new KernelFactory().UseGoogleGeminiProvider(Cache.ApiKey, modelId),
                 _ => throw new NotSupportedException("The specified AI service provider is not supported.")
             };
+
+            _globalInstruction = await File.ReadAllTextAsync(Path.Combine(AppContext.BaseDirectory, "SystemInstructions", "DiagnosticAndTroubleshooting.md"));
 
             _chatCompletionService = new AgentChatCompletionService(kernelFactory.WithPlugins(Cache.SemanticKernelPlugins))
                 .WithSystemInstruction(_globalInstruction);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Optimus.Controls.UserInforForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Optimus.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Width="400">
+
+    <StackPanel Spacing="8">
+        <TextBox Header="Your name" PlaceholderText="Enter your friendly name here" HorizontalAlignment="Stretch"/>
+        <ComboBox Header="Your age" PlaceholderText="Choose your age range" HorizontalAlignment="Stretch" />
+        <ComboBox Header="Your gender" PlaceholderText="Choose your gender" HorizontalAlignment="Stretch" />
+        <ComboBox Header="Your primary language" PlaceholderText="Choose your primary language" HorizontalAlignment="Stretch"/>
+    </StackPanel>
+</UserControl>
